@@ -1,15 +1,29 @@
-import { create } from 'apisauce';
+import axios from "axios";
+import { toast } from "react-toastify";
+import logger from "../services/logService";
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
-const apiClient = create({
-    baseURL: 'http://34.121.226.195:8069',
+axios.interceptors.response.use(null, error => {
+    const expectedError =
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500;
+    if (!expectedError) {
+        logger.log(error);
+        toast.error("An unexpected error occured.");
+    }
+    return Promise.reject(error);
 });
 
-// will import the token from https only cookies later
+function setJwt(jwt) {
+    axios.defaults.headers.common["Authorization"] = `JWT ${jwt}`;
+}
 
-const get = apiClient.get;
-apiClient.get = async (url, params, axiosConfig) => {
-    return await get(url, params, axiosConfig);
+export default {
+    get: axios.get,
+    post: axios.post,
+    put: axios.put,
+    delete: axios.delete,
+    setJwt
 };
-
-export default apiClient;
