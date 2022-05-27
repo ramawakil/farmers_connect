@@ -9,6 +9,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import AppSubmitButton from "../components/forms/AppSubmitButton";
 import authApi from "../api/auth";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
+import {toast} from "react-toastify";
 
 const ValidationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
@@ -20,19 +21,18 @@ function Login(props) {
 
     const login = async (values) => {
         setError(null);
-        const credentials = {
-            username: values.username,
-            password: values.password,
-        };
-        try {
-            await authApi.login(credentials);
 
+        try {
+            await authApi.login({
+                username: values.username,
+                password: values.password,
+            });
+            window.location = '/';
         }
         catch (e) {
-            console.log(e);
             setError(e.response.data.detail);
+            await toast.error(e.response.data.detail);
         }
-        console.log(values);
     };
 
     return (

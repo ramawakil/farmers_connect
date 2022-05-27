@@ -4,42 +4,54 @@ import config from '../../config.json';
 
 const apiEndPoint = config.apiEndPoint;
 // const tokenKey = config.apiEndPoint + "/api/token";
-const token = 'tokenKey';
+const tokenAccess = 'accessTokenKey';
+const tokenRefresh = 'refreshTokenKey';
 
-http.setJwt(getJwt());
+// http.setJwt(getJwt());
 
 export async function login(credentials) {
   await logout();
-  const res =
-      await http.post(`${apiEndPoint}/auth/jwt/create/`, credentials);
-  console.log(res);
-  // loginWithJwt(jwt);
+  const res = await http.post(`${apiEndPoint}/auth/jwt/create/`, credentials);
+  // res.data contains { access, refresh }
+  loginWithJwt(res.data);
 }
 
-export function loginWithJwt(jwt) {
-  localStorage.setItem(token, jwt);
+export async function fetchUser() {
+  const access = await getJwt();
+  return await http.get(`${apiEndPoint}/auth/users/me/`, {
+    headers: {
+      'Authorization': `JWT ${access}`
+    }
+  });
+}
+
+export async function loginWithJwt(jwt) {
+  await localStorage.setItem(tokenAccess, JSON.stringify(jwt.access));
 }
 
 export function logout() {
-  localStorage.removeItem(token);
+  localStorage.removeItem(tokenAccess);
 }
 
 export function getCurrentUser() {
   try {
-    return localStorage.getItem(token);
+    return JSON.parse(localStorage.getItem(tokenAccess));
   } catch (error) {
     return null;
   }
 }
 //
-export function getJwt() {
-  return localStorage.getItem(token);
+export async function getJwt() {
+  return await JSON.parse(localStorage.getItem(tokenAccess));
 }
 
-export default {
+const authApi = {
   login,
   loginWithJwt,
   logout,
   getCurrentUser,
-  getJwt
+  getJwt,
+  fetchUser
 };
+
+export default authApi;

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {ThemeProvider} from "@mui/material";
 import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {ToastContainer} from "react-toastify";
@@ -23,8 +24,8 @@ import {BrowserRouter} from "react-router-dom";
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <ToastContainer/>
             <BrowserRouter>
+                <ToastContainer/>
                 <App/>
             </BrowserRouter>
         </ThemeProvider>

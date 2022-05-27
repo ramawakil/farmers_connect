@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {AppBar, Avatar, Box, Button, IconButton, Toolbar} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
+import UserContext from "../context/userContext";
+import authApi from '../api/auth';
+
 
 const useStyles = makeStyles(theme => ({
     appBar: {
@@ -15,7 +18,9 @@ const useStyles = makeStyles(theme => ({
 
 function AppNavBar(props) {
     const classes = useStyles();
-    // const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
 
     // useEffect(() => {
     //     if (session.status === 'unauthenticated') {
@@ -26,83 +31,62 @@ function AppNavBar(props) {
     //     }
     // }, [navigate.pathname]);
 
+    const logOut = async () => {
+        // session.logout();
+        // navigate.push('/');
+        await authApi.logout();
+        navigate('/');
+    };
+
 
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar color='secondary' position='static' className={classes.appBar}>
                 <Toolbar>
 
-                        <Button
-                            color='white'
-                            sx={{fontWeight: 'bold'}}
-                        >
-                            Farmers Connect
-                        </Button>
-
-                    <IconButton
-                        size='large'
-                        edge='start'
-                        color='inherit'
-                        aria-label='menu'
-                        disabled={true}
+                    <Button
+                        color='white'
+                        sx={{fontWeight: 'bold'}}
                     >
-                        <Avatar color='white'>
-                            <img src='/nai-logo.png' width='40' alt='app logo'  />
-                        </Avatar>
+                        Farmers Connect
+                    </Button>
 
-                    </IconButton>
-                    <Box sx={{flexGrow: 1}}></Box>
-                   <Link to='/'>
+                    <Link to='/'>
                         <IconButton
-                            sx={{ marginRight: 1 }}
                             size='large'
-                            edge='end'
+                            edge='start'
                             color='inherit'
                             aria-label='menu'
-
+                            disabled={true}
                         >
-                            <LogoutIcon color='white'/>
+                            <Avatar color='white'>
+                                <img src='/nai-logo.png' width='40' alt='app logo'/>
+                            </Avatar>
+
                         </IconButton>
                     </Link>
-                    <Link to='/account'>
-                        <IconButton
-                            sx={{ marginRight: 1 }}
-                            size='large'
-                            edge='end'
-                            color='inherit'
-                            aria-label='menu'
-                        >
-                            {/*<Avatar>{session?.data.token.name.toString().slice()[0]}</Avatar>*/}
-                        </IconButton>
-                        <Link to='/profile'>
+
+
+                    <Box sx={{flexGrow: 1}}></Box>
+                     {/*when user is logged in*/}
+
+                    { (user) && (
+                        <Link to='/profile' >
                             <IconButton
                                 size='large'
                                 edge='end'
                                 color='inherit'
                                 aria-label='menu'
-                                sx={{ marginRight: 1 }}
+                                sx={{marginRight: 1}}
                             >
                                 <AccountCircleIcon color='white'/>
                             </IconButton>
                         </Link>
-                    </Link>
-                   <Link to='/login'>
+                    ) }
+
+                    <Link to='/help'>
                         <IconButton
-                            sx={{ marginRight: 1 }}
-                            size='large'
-                            edge='end'
-                            color='inherit'
-                            aria-label='menu'
-                        >
-                            <LoginIcon color='white'/>
-                        </IconButton>
-                    </Link>
-
-
-
-
-                  <Link to='/help'>
-                        <IconButton
+                            sx={{marginRight: 1}}
                             size='large'
                             edge='end'
                             color='inherit'
@@ -111,6 +95,36 @@ function AppNavBar(props) {
                             <HelpOutlineIcon color='white'/>
                         </IconButton>
                     </Link>
+
+                    { (user) && (
+                        <Link to='/logout' >
+                            <IconButton
+                                size='large'
+                                edge='end'
+                                color='inherit'
+                                aria-label='menu'
+                                sx={{marginRight: 1}}
+                            >
+                                <LogoutIcon color='white' onClick={logOut} />
+                            </IconButton>
+                        </Link>
+                    ) }
+
+
+                    { (!user) && (
+                        <Link to='/login'>
+                            <IconButton
+                                sx={{marginRight: 1}}
+                                size='large'
+                                edge='end'
+                                color='inherit'
+                                aria-label='menu'
+                            >
+                                <LoginIcon color='white'/>
+                            </IconButton>
+                        </Link>
+                    ) }
+
 
                 </Toolbar>
             </AppBar>

@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         margin: theme.spacing(1),
         color: theme.palette.error.main,
-        fontSize: '0.8rem',
+        fontSize: '15px',
     },
 }));
 
@@ -17,7 +17,7 @@ function AppErrorMessage({error, visible, width}) {
     if (!visible || !error) return null;
 
     return (
-        <AppText className={classes.root} sx={{ width: width, }} >{error}</AppText>
+        <AppText className={classes.root} sx={{ width: width, fontSize: '15px', ml: 1 }} >{error}</AppText>
     );
 }
 
