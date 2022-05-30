@@ -6,6 +6,9 @@ import AppFormField from "../../components/forms/AppFormField";
 import AppButton from "../../components/AppButton";
 import MyLocationIcon from '@mui/icons-material/MyLocation';
 import AppSubmitButton from "../../components/forms/AppSubmitButton";
+import farmsApi from '../../api/farms'
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 
 const newFarmValidationSchema = Yup.object().shape({
@@ -16,10 +19,40 @@ const newFarmValidationSchema = Yup.object().shape({
 
 
 function NewFarmForm(props) {
+    const navigate = useNavigate();
+    const [error, setError] = React.useState(null);
     const [location, setLocation] = React.useState({
         lat: null,
         lng: null,
     });
+
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                setLocation({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            });
+        }
+    };
+
+    const createNewFarm = async (values) => {
+        try{
+            await farmsApi.createFarm({
+                ...values,
+               latitude: location.lat,
+               longitude: location.lng,
+            });
+            toast.success('Farm created successfully');
+            await navigate('/farmer');
+        }
+        catch(e){
+            setError(e.response.data.detail);
+            toast.error(error);
+        }
+    }
+
 
     return (
         <>
@@ -30,7 +63,7 @@ function NewFarmForm(props) {
                 <AppForm
                     initialValues={{ title: '', description: '', crop_cultivated: '' }}
                     validationSchema={newFarmValidationSchema}
-                    onSubmit={(values) => props.onSubmit(values)}
+                    onSubmit={createNewFarm}
                 >
                     <AppFormField
                         name='title'
@@ -70,6 +103,7 @@ function NewFarmForm(props) {
                             title='Locate me'
                             sx={{ textTransform: 'none', color: 'text.main', m: 1 }}
                             color='info'
+                            onClick={getLocation}
                             startIcon={<MyLocationIcon />}
                         />
                     </Box>

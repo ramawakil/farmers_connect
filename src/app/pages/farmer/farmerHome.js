@@ -3,6 +3,8 @@ import {Box, Container, Tab, Tabs} from "@mui/material";
 import {Route, Routes, useNavigate} from "react-router-dom";
 import Farms from "./farms";
 import NewFarmForm from "./newFarmForm";
+import FarmDetailPage from "./farmDetailPage";
+import FarmerRequests from "./farmerRequests";
 
 
 function FarmerHome(props) {
@@ -28,15 +30,17 @@ function FarmerHome(props) {
                     aria-label="secondary tabs example"
                 >
                     <Tab value="/farmer" label="Farms" />
-                    <Tab value="/farmer/" label="SHAMBA Requests" />
+                    <Tab value="/farmer/farm-requests" label="SHAMBA Requests" />
                 </Tabs>
             </Box>
 
             <Box>
 
                 <Routes>
-                    <Route path='/' element={<Farms />} />
-                    <Route path='/new-farm' element={<NewFarmForm />} />
+                    <Route path='' element={<Farms />} />
+                    <Route path='new-farm' element={<NewFarmForm />} />
+                    <Route path=':farmId' element={<FarmDetailPage />} />
+                    <Route path='farm-requests' element={<FarmerRequests />} />
                 </Routes>
             </Box>
 

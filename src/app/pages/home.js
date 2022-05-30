@@ -47,7 +47,7 @@ function HomePage(props) {
         });
        fetchUser();
 
-    });
+    }, []);
 
     React.useEffect(() => {
         if (user) {
