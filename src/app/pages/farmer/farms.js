@@ -35,6 +35,13 @@ function Farms(props) {
 
     };
 
+    const navigateToDetail = (farm) => {
+        navigate(`/farmer/${farm.id}`, state => ({
+            ...state,
+            farm: farm
+        }));
+    };
+
     return (
         <Container maxWidth='md' sx={{mt: 3}}>
 
@@ -56,9 +63,7 @@ function Farms(props) {
                 farmList.map((farm, index) => {
                     return (
                         <>
-                        <Link to={`/farmer/${farm.id}`} state={{ obj: farm }}>
-                            <FarmCardComponent farm={farm} key={index}/>
-                        </Link>
+                            <FarmCardComponent farm={farm} key={index} navigateToDetail={() => navigateToDetail(farm)} />
                         </>
 
                     )

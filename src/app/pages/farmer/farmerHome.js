@@ -5,6 +5,7 @@ import Farms from "./farms";
 import NewFarmForm from "./newFarmForm";
 import FarmDetailPage from "./farmDetailPage";
 import FarmerRequests from "./farmerRequests";
+import FarmRequestDetail from "./farmRequestDetail";
 
 
 function FarmerHome(props) {
@@ -40,7 +41,11 @@ function FarmerHome(props) {
                     <Route path='' element={<Farms />} />
                     <Route path='new-farm' element={<NewFarmForm />} />
                     <Route path=':farmId' element={<FarmDetailPage />} />
-                    <Route path='farm-requests' element={<FarmerRequests />} />
+                    <Route path='farm-requests/*' >
+                        <Route path='' element={<FarmerRequests />} />
+                            <Route path=':farmRequestId' element={<FarmRequestDetail />} />
+                    </Route>
+
                 </Routes>
             </Box>
 

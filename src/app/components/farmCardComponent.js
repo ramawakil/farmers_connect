@@ -5,16 +5,15 @@ import DeviceThermostatOutlinedIcon from "@mui/icons-material/DeviceThermostatOu
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
 
-function FarmCardComponent({ farm }) {
+function FarmCardComponent({ farm, navigateToDetail }) {
     return (
         <>
-            <Box>
+            <Box onClick={navigateToDetail} >
                 <Box component={Paper} sx={{
                     p: 3,
                     pb: 1,
                     m: 1,
                     mt: 3,
-                    backgroundColor: '#eeeeff',
                     cursor: 'pointer',
 
                 }}>
@@ -27,11 +26,11 @@ function FarmCardComponent({ farm }) {
                         <Typography variant='h5'>
                             { farm.title }
                         </Typography>
-                        <div>
-                            <Typography variant='body1'>
+                        <Box sx={{ textDecoration: 'none' }}>
+                            <Typography variant='subtitle2'>
                                 Crop cultivated: <span>{farm.crop_cultivated}</span>
                             </Typography>
-                        </div>
+                        </Box>
                     </Box>
 
                     <Divider/>
