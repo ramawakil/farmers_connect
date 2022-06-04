@@ -36,10 +36,11 @@ function Farms(props) {
     };
 
     const navigateToDetail = (farm) => {
-        navigate(`/farmer/${farm.id}`, state => ({
-            ...state,
-            farm: farm
-        }));
+        navigate(`/farmer/${farm.id}`, {
+            state: {
+                farm: farm
+            }
+        });
     };
 
     return (

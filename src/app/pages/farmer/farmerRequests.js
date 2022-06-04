@@ -21,7 +21,6 @@ function FarmerRequests(props) {
         try {
             const res = await farmsRequestApi.farmRequests();
             setRequests(res.data);
-            console.log(res.data);
         }
         catch (e) {
             setError(e.response.data.detail);
@@ -30,7 +29,7 @@ function FarmerRequests(props) {
     };
 
     const navigateRequestDetails = (request) => {
-        navigate(`/farmer/farm-requests/${request.id}`);
+        navigate(`/farmer/farm-requests/${request.id}`, {state: {request}});
     };
 
     return (

@@ -27,7 +27,7 @@ const FarmValidationSchema = Yup.object().shape({
 
 function FarmDetailPage(props) {
     let params = useLocation();
-    const obj = params.state.obj;
+    const obj = params.state.farm;
     const navigate = useNavigate();
     const [error, setError] = React.useState(null);
     const [location, setLocation] = React.useState({
@@ -59,7 +59,7 @@ function FarmDetailPage(props) {
     }
 
     const newFarmRequest = async () => {
-        navigate('/farmer/new-request');
+        navigate('/farmer/farm-requests/new-request', {state: {obj}});
     }
 
     const getLocation = () => {

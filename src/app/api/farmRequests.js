@@ -27,9 +27,9 @@ export async function farmRequest(farmId, requestId) {
     });
 }
 
-export async function farmRequestCreate(farmId, request) {
+export async function farmRequestCreate(request) {
     const access = await getJwt();
-    return await http.post(`${apiEndPoint}/farms/${farmId}/requests/`, request, {
+    return await http.post(`${apiEndPoint}/requests/`, request, {
         headers: {
             'Authorization': `JWT ${access}`
         }
@@ -56,7 +56,7 @@ export async function farmRequestDelete(farmId, requestId) {
 
 export async function getFarmCategories() {
     const access = await getJwt();
-    return await http.get(`${apiEndPoint}/farms/farm-categories/`, {
+    return await http.get(`${apiEndPoint}/farm-categories/`, {
         headers: {
             'Authorization': `JWT ${access}`
         }
