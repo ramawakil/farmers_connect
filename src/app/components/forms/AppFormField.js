@@ -38,7 +38,6 @@ function AppFormField({backIcon, forwardIcon, name, width = '100%', borderIssues
                     error={errors[name] && touched[name]}
                     {...otherProps}
                     sx={{ mx: 0, my: 0.5 }}
-                    {...otherProps}
                     fullWidth
                 />
                 {forwardIcon && forwardIcon}

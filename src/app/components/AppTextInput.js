@@ -6,8 +6,8 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexGrow: 1,
-        backgroundColor: theme.palette.background.cloud,
-        borderRadius: 4,
+        alignItems: 'center',
+        borderRadius: 1,
         overflow: 'hidden',
     }
 }));
@@ -18,7 +18,8 @@ function AppTextInput({
                           width = '100%',
                           label,
                           value,
-                          handleChange
+                          handleChange,
+                          ...otherProps
                       }) {
     const classes = useStyles();
 
@@ -26,7 +27,7 @@ function AppTextInput({
         <Box className={classes.root} sx={{width: width}}>
             {backIcon && backIcon}
             <TextField variant='standard' value={value} placeholder={label} fullWidth sx={{px: 1}}
-                       onChange={handleChange}/>
+                       onChange={handleChange} {...otherProps} />
             {forwardIcon && forwardIcon}
         </Box>
     );

@@ -8,7 +8,7 @@ import farmsApi from '../../api/farmRequests';
 import {toast} from "react-toastify";
 import AppFormChoiceField from "../../components/forms/AppFormChoiceField";
 import AppFormSelectField from "../../components/forms/AppFormSelectField";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 const FarmRequestValidationSchema = Yup.object().shape({
@@ -20,20 +20,21 @@ function NewRequest(props) {
     const params = useLocation();
     const [error, setError] = React.useState(null);
     const [farmCategories, setFarmCategories] = React.useState([]);
+    const navigate = useNavigate();
 
 
     React.useEffect(() => {
         fetchCategories();
-        console.log(params);
     }, []);
 
     const handleSubmit = async (values) => {
         try {
-            const res = await farmsApi.farmRequestCreate({
+            await farmsApi.farmRequestCreate({
                 farm: params.state.obj.id,
                 ...values
             });
             toast.success('Request created successfully');
+            navigate('/farmer/farm-requests');
 
         }
         catch (e) {

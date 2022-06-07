@@ -1,5 +1,7 @@
 import React from 'react';
 import {Box, Divider, Paper, Stack, Typography} from "@mui/material";
+import utilsApi from "../services/utils";
+
 
 function FarmRequestsListComponent({ request, navigateToDetail }) {
 
@@ -40,7 +42,7 @@ function FarmRequestsListComponent({ request, navigateToDetail }) {
                         Responses: {request.farm_request_responses.length}
                     </Typography>
                     <Typography variant='body1'>
-                        Status: {request.status}
+                        {/*{request.created_at}*/}
                     </Typography>
 
                 </Box>

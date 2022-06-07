@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Container, Tab, Tabs} from "@mui/material";
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import Farms from "./farms";
 import NewFarmForm from "./newFarmForm";
 import FarmDetailPage from "./farmDetailPage";
@@ -10,14 +10,18 @@ import NewRequest from "./newRequest";
 
 
 function FarmerHome(props) {
-    const [value, setValue] = useState('/farmer');
+    const [value, setValue] = useState();
     const navigate = useNavigate();
+    const params = useLocation();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
         navigate(newValue);
-
     };
+
+    useEffect(() => {
+        setValue(params.pathname);
+    }, [params.pathname]);
 
 
     return (
@@ -32,7 +36,7 @@ function FarmerHome(props) {
                     aria-label="secondary tabs example"
                 >
                     <Tab value="/farmer" label="Farms"/>
-                    <Tab value="/farmer/farm-requests" label="SHAMBA Requests"/>
+                    <Tab value="/farmer/farm-requests" label="SHAMBA FarmRequests"/>
                 </Tabs>
             </Box>
 

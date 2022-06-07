@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import authApi from './app/api/auth';
 import FarmerHome from "./app/pages/farmer/farmerHome";
 import HomePage from "./app/pages/home";
+import CompanyHome from "./app/pages/companyEmployee/companyHome";
+import FarmLeaderHome from "./app/pages/farmLeader/farmLeaderHome";
 
 
 function App() {
@@ -22,7 +24,8 @@ function App() {
                     <Route path='' element={<HomePage/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path='/farmer/*' element={<FarmerHome/>}/>
-
+                    <Route path='/company/*' element={<CompanyHome/>}/>
+                    <Route path='/farmer-leader' element={<FarmLeaderHome/>}/>
                 </Routes>
             </UserContext.Provider>
         </>

@@ -16,7 +16,7 @@ const handleClick = (id) => {
 function FarmRequestTable({ farmRequests }) {
     return (
         <>
-            <AppTable tableData={farmRequests} tableHeaders={TableHeaders} caption='Farmer Requests' columns={Columns} handleClick={handleClick} />
+            <AppTable tableData={farmRequests} tableHeaders={TableHeaders} caption='Farmer FarmRequests' columns={Columns} handleClick={handleClick} />
         </>
     );
 }

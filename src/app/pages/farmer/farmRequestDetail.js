@@ -32,12 +32,12 @@ function FarmRequestDetail({ }) {
             <Container maxWidth='md' sx={{ p: 3 }}>
                 <Box>
                     <Typography variant='h4' gutterBottom>
-                        Farm name
+                        {params.request.name}
                     </Typography>
                     <Divider />
                     <Box sx={{ p: 2 }}>
                         <Typography variant='subtitle2' gutterBottom>
-                            description of requests
+                            {params.request.description}
                         </Typography>
                     </Box>
 

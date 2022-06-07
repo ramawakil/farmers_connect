@@ -9,7 +9,7 @@ const tokenAccess = 'accessTokenKey';
 const tokenRefresh = 'refreshTokenKey';
 
 
-export async function farmRequests(farmId) {
+export async function farmRequests() {
     const access = await getJwt();
     return await http.get(`${apiEndPoint}/requests/`, {
         headers: {
