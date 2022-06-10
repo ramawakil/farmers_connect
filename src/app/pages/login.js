@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Container, Paper, Stack, Typography} from "@mui/material";
 import WelcomeScreenImage from "../components/WelcomeScreenImage";
 import AppForm from "../components/forms/AppForm";
@@ -10,6 +10,7 @@ import AppSubmitButton from "../components/forms/AppSubmitButton";
 import authApi from "../api/auth";
 import AppErrorMessage from "../components/forms/AppErrorMessage";
 import {toast} from "react-toastify";
+import LoadingContext from "../context/loadingContext";
 
 const ValidationSchema = Yup.object().shape({
     username: Yup.string().required('Username is required'),
@@ -18,8 +19,10 @@ const ValidationSchema = Yup.object().shape({
 
 function Login(props) {
     const [error, setError] = useState();
+    const { setLoading } = useContext(LoadingContext);
 
     const login = async (values) => {
+        setLoading(true);
         setError(null);
 
         try {
@@ -27,9 +30,11 @@ function Login(props) {
                 username: values.username,
                 password: values.password,
             });
+            setLoading(false);
             window.location = '/';
         }
         catch (e) {
+            setLoading(false)
             setError(e.response.data.detail);
             await toast.error(e.response.data.detail);
         }

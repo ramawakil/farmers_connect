@@ -35,9 +35,9 @@ export async function createFarm(farm) {
     });
 }
 
-export async function updateFarm(farm) {
+export async function updateFarm(id, farm) {
     const access = await getJwt();
-    return await http.put(`${apiEndPoint}/farms/${farm.id}/`, farm, {
+    return await http.put(`${apiEndPoint}/farms/${id}/`, farm, {
         headers: {
             'Authorization': `JWT ${access}`
         }

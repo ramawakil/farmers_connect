@@ -11,7 +11,7 @@ function AppTable({caption, tableData, tableHeaders, columns, handleClick}) {
                     <TableHead>
                         <TableRow sx={{ backgroundColor: 'lightgray'}}>
                             {
-                                columns.map((header, index) => (
+                                columns?.map((header, index) => (
                                     <TableCell align='justify' key={index}>{header}</TableCell>
                                 ))
                             }
@@ -19,10 +19,10 @@ function AppTable({caption, tableData, tableHeaders, columns, handleClick}) {
                     </TableHead>
                     <TableBody>
                         {
-                            tableData.map((row, index) => (
+                            tableData?.map((row, index) => (
                                     <TableRow  sx={{ cursor: 'pointer' }} key={index} onClick={() => handleClick(row.id)}>
                                         {
-                                            tableHeaders.map((column, index) => (
+                                            tableHeaders?.map((column, index) => (
 
                                                 <TableCell align='justify' sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}  key={index}>{row[column]}</TableCell>
                                             ))

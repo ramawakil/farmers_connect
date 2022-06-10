@@ -63,6 +63,53 @@ export async function getFarmCategories() {
     });
 }
 
+export async function addComment(id, data) {
+    const access = await getJwt();
+    return await http.post(`${apiEndPoint}/requests/${id}/responses/`, data, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    })
+}
+
+export async function getEmployees() {
+    const access = await getJwt();
+    return await http.get(`${apiEndPoint}/employees/`, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    })
+}
+
+export async function registerEmployee(data) {
+    const access = await getJwt();
+    return await http.post(`${apiEndPoint}/employees/`, data, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    })
+}
+
+export async function getFarmers() {
+    const access = await getJwt();
+    return await http.get(`${apiEndPoint}/farmers/`, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    })
+}
+
+export async function registerFarmer(data) {
+    const access = await getJwt();
+    return await http.post(`${apiEndPoint}/farmers/`, data, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    })
+}
+
+
+
 
 const farmsApi = {
     farmRequests,
@@ -70,7 +117,12 @@ const farmsApi = {
     farmRequestCreate,
     farmRequestUpdate,
     farmRequestDelete,
-    getFarmCategories
+    getFarmCategories,
+    addComment,
+    getEmployees,
+    registerEmployee,
+    getFarmers,
+    registerFarmer
 };
 
 export default farmsApi;

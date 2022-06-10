@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Box, Container, Typography} from "@mui/material";
 import AppForm from "../../components/forms/AppForm";
 import * as Yup from "yup";
@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 import AppFormChoiceField from "../../components/forms/AppFormChoiceField";
 import AppFormSelectField from "../../components/forms/AppFormSelectField";
 import {useLocation, useNavigate} from "react-router-dom";
+import LoadingContext from "../../context/loadingContext";
 
 
 const FarmRequestValidationSchema = Yup.object().shape({
@@ -21,6 +22,8 @@ function NewRequest(props) {
     const [error, setError] = React.useState(null);
     const [farmCategories, setFarmCategories] = React.useState([]);
     const navigate = useNavigate();
+    const { setLoading } = useContext(LoadingContext);
+
 
 
     React.useEffect(() => {
@@ -28,22 +31,26 @@ function NewRequest(props) {
     }, []);
 
     const handleSubmit = async (values) => {
+        setLoading(true);
         try {
             await farmsApi.farmRequestCreate({
                 farm: params.state.obj.id,
                 ...values
             });
+            setLoading(false);
             toast.success('Request created successfully');
             navigate('/farmer/farm-requests');
 
         }
         catch (e) {
+            setLoading(false);
             setError(e.response.data.detail);
             toast.error(error);
         }
     };
 
     const fetchCategories = async () => {
+        setLoading(true);
         try {
             const res = await farmsApi.getFarmCategories();
             const lsObj = [];
@@ -54,8 +61,10 @@ function NewRequest(props) {
                 })
             });
             setFarmCategories(lsObj);
+            setLoading(false);
         } catch (e) {
             setError(e.response.data.detail)
+            setLoading(false);
             toast.error(error)
         }
     }

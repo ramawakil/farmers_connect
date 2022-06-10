@@ -3,12 +3,13 @@ import {Container} from "@mui/material";
 import AppTable from "../../components/commons/AppTable";
 
 const Headers = [
-    'First Name', 'Last Name', 'Mobile', 'Registered Date'
+    'Roll Number', 'First Name', 'Last Name', 'email',
 ]
 
 const Columns = [
-    'firstName', 'lastName', 'mobile', 'created_at'
+    'id', 'first_name', 'last_name', 'user'
 ]
+
 
 function FarmLeaderTable({ data }) {
     return (

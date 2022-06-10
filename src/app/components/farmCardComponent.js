@@ -4,8 +4,11 @@ import ShowerOutlinedIcon from "@mui/icons-material/ShowerOutlined";
 import DeviceThermostatOutlinedIcon from "@mui/icons-material/DeviceThermostatOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import SpeedOutlinedIcon from "@mui/icons-material/SpeedOutlined";
+import {useLocation} from "react-router-dom";
 
 function FarmCardComponent({ farm, navigateToDetail }) {
+    const router = useLocation();
+
     return (
         <>
             <Box onClick={navigateToDetail} >
@@ -93,10 +96,14 @@ function FarmCardComponent({ farm, navigateToDetail }) {
                         <Typography variant='subtitle2'>
                             Location: latitude: <span>{farm.latitude}</span> longitude: <span>{farm.longitude}</span>
                         </Typography>
+                        {
+                         farm?.farm_requests?.length && (
+                                <Typography variant='subtitle2'>
+                                    Shamba Request Made: <span>{farm.farm_requests.length}</span>
+                                </Typography>
+                            )
+                        }
 
-                        <Typography variant='subtitle2'>
-                            Shamba Request Made: <span>{farm.farm_requests.length}</span>
-                        </Typography>
 
                     </Box>
                 </Box>

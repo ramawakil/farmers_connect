@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Avatar, Box, Container, Divider, Paper, Tooltip, Typography} from "@mui/material";
 import farmsResponsesApi from '../../api/farmRequestResponse';
 import {useLocation} from "react-router-dom";
 import BusinessIcon from '@mui/icons-material/Business';
+import LoadingContext from "../../context/loadingContext";
 
 
 function FarmRequestDetail({ }) {
@@ -10,6 +11,7 @@ function FarmRequestDetail({ }) {
     const [error, setError] = React.useState(null);
     const [responses, setResponses] = React.useState([]);
     const [ requestId, setRequestId ] = React.useState(params.request.id);
+    const { setLoading } = useContext(LoadingContext);
 
 
     React.useEffect(() => {
@@ -18,10 +20,14 @@ function FarmRequestDetail({ }) {
     }, []);
 
     const getResponses = async () => {
+        setLoading(true);
         try {
             const response = await farmsResponsesApi.getRequestResponses(requestId);
+            console.log(response)
             setResponses(response.data);
+            setLoading(false);
         } catch (error) {
+            setLoading(false);
             setError(error);
         }
     };
@@ -31,9 +37,10 @@ function FarmRequestDetail({ }) {
         <>
             <Container maxWidth='md' sx={{ p: 3 }}>
                 <Box>
-                    <Typography variant='h4' gutterBottom>
-                        {params.request.name}
+                    <Typography variant='h6' color='icon.main' gutterBottom>
+                        {params.request.farm.title}
                     </Typography>
+                    Description
                     <Divider />
                     <Box sx={{ p: 2 }}>
                         <Typography variant='subtitle2' gutterBottom>
@@ -41,11 +48,20 @@ function FarmRequestDetail({ }) {
                         </Typography>
                     </Box>
 
+                    <Divider />
+
+                    { (responses.length === 0) && (
+                        <Typography variant='h4' color='accent.main'>
+                            There is no feedback right now!
+                        </Typography>
+                    ) }
+
                     {
                         responses.map(request => (
                             <Box key={request.id} component={Paper} sx={{
                                 display: 'flex',
                                 p: 2,
+                                m: 2,
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
                             }}>
@@ -67,7 +83,7 @@ function FarmRequestDetail({ }) {
                                 <Box sx={{ mx: 'auto' }}>
                                     <Typography variant='body1' gutterBottom>
                                         {request.comments}
-                                        <p>{request.description}</p>
+                                        {/*<p>{request.description}</p>*/}
                                     </Typography>
                                 </Box>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Box, Container, IconButton, Typography} from "@mui/material";
 import AppForm from "../../components/forms/AppForm";
 import * as Yup from 'yup';
@@ -9,6 +9,7 @@ import AppSubmitButton from "../../components/forms/AppSubmitButton";
 import farmsApi from '../../api/farms'
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import LoadingContext from "../../context/loadingContext";
 
 
 const newFarmValidationSchema = Yup.object().shape({
@@ -21,6 +22,7 @@ const newFarmValidationSchema = Yup.object().shape({
 function NewFarmForm(props) {
     const navigate = useNavigate();
     const [error, setError] = React.useState(null);
+    const { setLoading } = useContext(LoadingContext);
     const [location, setLocation] = React.useState({
         lat: null,
         lng: null,
@@ -38,6 +40,7 @@ function NewFarmForm(props) {
     };
 
     const createNewFarm = async (values) => {
+        setLoading(true);
         try{
             await farmsApi.createFarm({
                 ...values,
@@ -45,10 +48,12 @@ function NewFarmForm(props) {
                longitude: location.lng,
             });
             toast.success('Farm created successfully');
+            setLoading(false);
             await navigate('/farmer');
         }
         catch(e){
             setError(e.response.data.detail);
+            setLoading(false);
             toast.error(error);
         }
     }

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import logger from "../services/logService";
+import config from "../../config.json";
 
 
 const tokenJwt = 'accessTokenKey';
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = config.apiEndPoint;
 
 axios.defaults.headers.common["Authorization"] = `JWT ${localStorage.getItem(tokenJwt)}`;
 // add token to every request

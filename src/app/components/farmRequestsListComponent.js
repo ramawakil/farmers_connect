@@ -21,7 +21,7 @@ function FarmRequestsListComponent({ request, navigateToDetail }) {
                     }}
                 >
                     <Typography variant='h5'>
-                        {request.farm}
+                        {request.farm.title}
                     </Typography>
                     <Typography variant='body1' >
                         Farm {request.category} Stage
@@ -39,7 +39,7 @@ function FarmRequestsListComponent({ request, navigateToDetail }) {
 
                 }}>
                     <Typography variant='body1'>
-                        Responses: {request.farm_request_responses.length}
+                        Responses: {request.farm_request_responses?.length}
                     </Typography>
                     <Typography variant='body1'>
                         {/*{request.created_at}*/}

@@ -39,7 +39,7 @@ function CompanyHome(props) {
                         aria-label="secondary tabs example"
                     >
                         <Tab value="/company" label="Home"/>
-                        {user.is_staff && <Tab value='/company/employment' label="Organization"/>}
+                        <Tab value='/company/employment' label="Organization"/>
                     </Tabs>
                 </Box>
 

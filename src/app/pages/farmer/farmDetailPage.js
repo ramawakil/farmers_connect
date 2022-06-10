@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import AppForm from "../../components/forms/AppForm";
 import * as Yup from 'yup';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
@@ -10,25 +10,27 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import AddIcon from "@mui/icons-material/Add";
 import farmsApi from "../../api/farms";
 import {toast} from "react-toastify";
+import LoadingContext from "../../context/loadingContext";
 
 
 const FarmValidationSchema = Yup.object().shape({
     title: Yup.string().required('Farm title is required'),
     description: Yup.string().required('Description is required'),
-    temperature: Yup.string().required('Temperature is required'),
-    humidity: Yup.string().required('Humidity is required'),
-    ph_scale: Yup.string().required('PH scale is required'),
-    rainfall: Yup.string().required('Rainfall is required'),
-    crop_suggested: Yup.string().required('Crop suggested is required'),
+    temperature: Yup.string(),
+    humidity: Yup.string(),
+    ph_scale: Yup.string(),
+    rainfall: Yup.string(),
+    crop_suggested: Yup.string(),
     crop_cultivated: Yup.string().required('Crop cultivated is required'),
-    latitude: Yup.string().required('Latitude is required'),
-    longitude: Yup.string().required('Longitude is required'),
+    latitude: Yup.string(),
+    longitude: Yup.string()
 });
 
 function FarmDetailPage(props) {
     let params = useLocation();
     const obj = params.state.farm;
     const navigate = useNavigate();
+    const { setLoading } = useContext(LoadingContext);
     const [error, setError] = React.useState(null);
     const [location, setLocation] = React.useState({
         lat: null,
@@ -43,16 +45,19 @@ function FarmDetailPage(props) {
     }, [])
 
     const submitForm = async (values) => {
+        setLoading(true);
      try{
-      await farmsApi.updateFarm(obj.id, {
+      const res = await farmsApi.updateFarm(obj.id, {
         ...values,
         latitude: location.lat,
         longitude: location.lng,
       });
+      setLoading(false);
       toast.success('Farm updated successfully');
-      await navigate('/farms/requests');
+      await navigate('/farmer');
      }
      catch(e){
+         setLoading(false);
          setError(e.response.data.detail);
          toast.error(error)
      }
@@ -77,7 +82,7 @@ function FarmDetailPage(props) {
         try{
             await farmsApi.deleteFarm(obj.id);
             toast.success('Farm deleted successfully');
-            await navigate('/farms');
+            await navigate('/farmer');
         }
         catch(e){
             setError(e.response.data.detail);
@@ -118,6 +123,7 @@ function FarmDetailPage(props) {
                     crop_suggested: obj.crop_suggested,
                     crop_cultivated: obj.crop_cultivated,
                 }}
+
                 onSubmit={submitForm}
                 validationSchema={FarmValidationSchema}
             >

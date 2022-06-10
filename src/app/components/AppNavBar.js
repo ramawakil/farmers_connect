@@ -41,7 +41,7 @@ function AppNavBar(props) {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar color='secondary' position='static' className={classes.appBar}>
+            <AppBar position='fixed' color='secondary' className={classes.appBar}>
                 <Toolbar>
 
                     <Button

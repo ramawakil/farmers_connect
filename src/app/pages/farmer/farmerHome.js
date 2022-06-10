@@ -36,7 +36,7 @@ function FarmerHome(props) {
                     aria-label="secondary tabs example"
                 >
                     <Tab value="/farmer" label="Farms"/>
-                    <Tab value="/farmer/farm-requests" label="SHAMBA FarmRequests"/>
+                    <Tab value="/farmer/farm-requests" label="SHAMBA Requests"/>
                 </Tabs>
             </Box>
 

@@ -26,7 +26,11 @@ function FarmRequests(props) {
     }
 
     const navigateToRequest = (request) => {
-        navigate(`/company/requests/${request.id}`)
+        navigate(`/company/requests/${request.id}`, {
+            state: {
+                obj: request
+            }
+        });
     }
 
     return (
