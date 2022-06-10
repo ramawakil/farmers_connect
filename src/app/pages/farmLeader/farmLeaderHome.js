@@ -1,20 +1,14 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
     Box,
-    Container, Dialog,
-    DialogActions, DialogContent,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
     DialogContentText,
     DialogTitle,
-    Stack,
-    Tab,
-    Tabs,
-    Typography
+    Stack
 } from "@mui/material";
-import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
-import FarmRequests from "../companyEmployee/farmRequests";
-import CompanyRequestDetail from "../companyEmployee/companyRequestDetail";
-import CompanyEmployment from "../companyEmployee/companyEmployment";
-import UserContext from "../../context/userContext";
 import AppButton from "../../components/AppButton";
 import AppTextInput from "../../components/AppTextInput";
 import FarmLeaderTable from "./farmLeaderTable";
@@ -38,7 +32,6 @@ function FarmLeaderHome(props) {
     const [value, setValue] = useState();
     const [farmers, setFarmers] = useState([]);
     const [filteredFarmers, setFilteredFarmers] = useState(farmers);
-    const {user} = useContext(UserContext);
     const [open, setOpen] = React.useState(false);
     const [error, setError] = React.useState(null);
     const {setLoading} = useContext(LoadingContext);
@@ -76,6 +69,7 @@ function FarmLeaderHome(props) {
 
 
     const handleChange = (event) => {
+        setValue(event.target.value);
         let word = event.target.value;
         let filtered = farmers.filter(farmer => {
             return farmer.first_name.toLowerCase().includes(word.toLowerCase()) || farmer.last_name.toLowerCase().includes(word.toLowerCase()) || farmer.id.toString().includes(word.toLowerCase());
@@ -85,24 +79,12 @@ function FarmLeaderHome(props) {
     }
 
 
-    const AddFarmer = (values) => {
-
-    }
-
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
-    };
-
-    const handleDelete = () => {
-        handleClose();
-    };
-
-    const handleSubmit = (values) => {
-        handleClose();
     };
 
 

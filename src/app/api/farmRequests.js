@@ -5,8 +5,8 @@ import {getJwt} from "./auth";
 
 const apiEndPoint = config.apiEndPoint + "/api";
 // const tokenKey = config.apiEndPoint + "/api/token";
-const tokenAccess = 'accessTokenKey';
-const tokenRefresh = 'refreshTokenKey';
+// const tokenAccess = 'accessTokenKey';
+// const tokenRefresh = 'refreshTokenKey';
 
 
 export async function farmRequests() {
@@ -107,8 +107,6 @@ export async function registerFarmer(data) {
         }
     })
 }
-
-
 
 
 const farmsApi = {

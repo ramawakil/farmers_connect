@@ -11,17 +11,14 @@ import {
 } from "@mui/material";
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
-import FarmLeaderTable from "../farmLeader/farmLeaderTable";
 import AppForm from "../../components/forms/AppForm";
 import AppFormField from "../../components/forms/AppFormField";
 import AppSubmitButton from "../../components/forms/AppSubmitButton";
-import UserContext from "../../context/userContext";
 import CompanyTable from "./companyEmploymentTable/companyTable";
 import * as Yup from "yup";
 import farmsRequestApi from '../../api/farmRequests';
 import {toast} from "react-toastify";
 import LoadingContext from "../../context/loadingContext";
-
 
 
 const ValidationSchema = Yup.object().shape({
@@ -76,6 +73,7 @@ function CompanyEmployment(props) {
 
     const handleChange = (event) => {
         let word = event.target.value;
+        setValue(word);
         let filtered = employees.filter(farmer => {
                 return farmer.first_name.toLowerCase().includes(word.toLowerCase()) || farmer.user.toLowerCase().includes(word.toLowerCase()) ||
                     farmer.last_name.toLowerCase().includes(word.toLowerCase()) ||
@@ -85,9 +83,6 @@ function CompanyEmployment(props) {
         setFilteredEmployees(filtered);
     }
 
-    const handleFilterUser = (keyWord) => {
-
-    }
 
     const handleClickOpen = () => {
         setOpen(true);
