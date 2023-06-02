@@ -1,7 +1,7 @@
 import http from "./client";
 
 
-const apiEndPoint = "http://localhost:8000";
+const apiEndPoint = "https://web-production-98ddf.up.railway.app/";
 // const tokenKey = config.apiEndPoint + "/api/token";
 const tokenAccess = 'accessTokenKey';
 const tokenRefresh = 'refreshTokenKey';
