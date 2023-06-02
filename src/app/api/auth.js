@@ -1,8 +1,7 @@
 import http from "./client";
-import config from '../../config.json';
 
 
-const apiEndPoint = config.apiEndPoint;
+const apiEndPoint = "http://localhost:8000";
 // const tokenKey = config.apiEndPoint + "/api/token";
 const tokenAccess = 'accessTokenKey';
 const tokenRefresh = 'refreshTokenKey';
@@ -10,48 +9,50 @@ const tokenRefresh = 'refreshTokenKey';
 // http.setJwt(getJwt());
 
 export async function login(credentials) {
-  await logout();
-  const res = await http.post(`${apiEndPoint}/auth/jwt/create/`, credentials);
-  // res.data contains { access, refresh }
-  loginWithJwt(res.data);
+    await logout();
+    console.log(apiEndPoint)
+    const res = await http.post(`${apiEndPoint}/auth/jwt/create/`, credentials);
+    // res.data contains { access, refresh }
+    loginWithJwt(res.data);
 }
 
 export async function fetchUser() {
-  const access = await getJwt();
-  return await http.get(`${apiEndPoint}/auth/users/me/`, {
-    headers: {
-      'Authorization': `JWT ${access}`
-    }
-  });
+    const access = await getJwt();
+    return await http.get(`${apiEndPoint}/auth/users/me/`, {
+        headers: {
+            'Authorization': `JWT ${access}`
+        }
+    });
 }
 
 export async function loginWithJwt(jwt) {
-  await localStorage.setItem(tokenAccess, JSON.stringify(jwt.access));
+    await localStorage.setItem(tokenAccess, JSON.stringify(jwt.access));
 }
 
 export function logout() {
-  localStorage.removeItem(tokenAccess);
+    localStorage.removeItem(tokenAccess);
 }
 
 export function getCurrentUser() {
-  try {
-    return JSON.parse(localStorage.getItem(tokenAccess));
-  } catch (error) {
-    return null;
-  }
+    try {
+        return JSON.parse(localStorage.getItem(tokenAccess));
+    } catch (error) {
+        return null;
+    }
 }
+
 //
 export async function getJwt() {
-  return await JSON.parse(localStorage.getItem(tokenAccess));
+    return await JSON.parse(localStorage.getItem(tokenAccess));
 }
 
 const authApi = {
-  login,
-  loginWithJwt,
-  logout,
-  getCurrentUser,
-  getJwt,
-  fetchUser
+    login,
+    loginWithJwt,
+    logout,
+    getCurrentUser,
+    getJwt,
+    fetchUser
 };
 
 export default authApi;

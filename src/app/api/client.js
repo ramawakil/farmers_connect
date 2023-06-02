@@ -1,11 +1,10 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import logger from "../services/logService";
-import config from "../../config.json";
 
 
 const tokenJwt = 'accessTokenKey';
-axios.defaults.baseURL = config.apiEndPoint;
+axios.defaults.baseURL = "https://web-production-98ddf.up.railway.app";
 
 axios.defaults.headers.common["Authorization"] = `JWT ${localStorage.getItem(tokenJwt)}`;
 // add token to every request
@@ -53,7 +52,7 @@ function getJwt() {
     }
 }
 
-const client =  {
+const client = {
     get: axios.get,
     post: axios.post,
     put: axios.put,
